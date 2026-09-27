@@ -1,39 +1,30 @@
-﻿public class Elipse
+﻿namespace TrabalhoN1_POO
 {
-    public int X;
-    public int Y;
-    public int RaioX;
-    public int RaioY;
-    public string Cor;
-
-    public Elipse() { }
-
-    public Elipse(int x, int y, int raioX, int raioY, string cor)
+    public class Elipse
     {
-        X = x;
-        Y = y;
-        RaioX = raioX;
-        RaioY = raioY;
-        Cor = cor;
-    }
+        public int X;
+        public int Y;
+        public int RaioX;
+        public int RaioY;
+        public string Cor;
 
-    public void Desenhar()
-    {
-        Console.WriteLine(SalvarEmString());
-    }
+        public Elipse()
+        {
+            Cor = "0,0,0";
+        }
 
-    public string SalvarEmString()
-    {
-        return $"4;{X};{Y};{RaioX};{RaioY};{Cor}";
-    }
+        public Elipse(int x, int y, int raioX, int raioY, string cor = "0,0,0")
+        {
+            X = x;
+            Y = y;
+            RaioX = raioX;
+            RaioY = raioY;
+            Cor = cor;
+        }
 
-    public void CarregarDeString(string dados)
-    {
-        var partes = dados.Split(';');
-        X = Convert.ToInt32(partes[1]);
-        Y = Convert.ToInt32(partes[2]);
-        RaioX = Convert.ToInt32(partes[3]);
-        RaioY = Convert.ToInt32(partes[4]);
-        Cor = partes[5];
+        public string ParaTexto()
+        {
+            return $"4;{X};{Y};{RaioX};{RaioY};{Cor}";
+        }
     }
 }

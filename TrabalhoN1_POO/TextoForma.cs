@@ -1,36 +1,29 @@
-﻿public class TextoForma
+﻿namespace TrabalhoN1_POO
 {
-    public int X;
-    public int Y;
-    public string Texto;
-    public string Cor;
-
-    public TextoForma() { }
-
-    public TextoForma(int x, int y, string texto, string cor)
+    public class TextoForma
     {
-        X = x;
-        Y = y;
-        Texto = texto;
-        Cor = cor;
-    }
+        public int X;
+        public int Y;
+        public string Conteudo;
+        public string Cor;
 
-    public void Desenhar()
-    {
-        Console.WriteLine(SalvarEmString());
-    }
+        public TextoForma()
+        {
+            Conteudo = "";
+            Cor = "0,0,0";
+        }
 
-    public string SalvarEmString()
-    {
-        return $"6;{X};{Y};{Texto};{Cor}";
-    }
+        public TextoForma(int x, int y, string conteudo, string cor = "0,0,0")
+        {
+            X = x;
+            Y = y;
+            Conteudo = conteudo;
+            Cor = cor;
+        }
 
-    public void CarregarDeString(string dados)
-    {
-        var partes = dados.Split(';');
-        X = Convert.ToInt32(partes[1]);
-        Y = Convert.ToInt32(partes[2]);
-        Texto = partes[3];
-        Cor = partes[4];
+        public string ParaTexto()
+        {
+            return $"6;{X};{Y};{Conteudo};{Cor}";
+        }
     }
 }

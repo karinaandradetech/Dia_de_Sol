@@ -1,56 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-
-public class ImagemVetorial
+﻿namespace TrabalhoN1_POO
 {
-    public int Largura;
-    public int Altura;
-
-    // Listas simples para cada tipo de forma
-    public List<Linha> Linhas = new List<Linha>();
-    public List<Retangulo> Retangulos = new List<Retangulo>();
-    public List<Circulo> Circulos = new List<Circulo>();
-    public List<Elipse> Elipses = new List<Elipse>();
-    public List<Poligono> Poligonos = new List<Poligono>();
-    public List<TextoForma> Textos = new List<TextoForma>();
-
-    // Construtores
-    public ImagemVetorial() { }
-
-    public ImagemVetorial(int largura, int altura)
+    public class Linha
     {
-        Largura = largura;
-        Altura = altura;
-    }
+        public int X1;
+        public int Y1;
+        public int X2;
+        public int Y2;
+        public string Cor;
+        public int Espessura;
 
-    // Desenha o cabeçalho e cada forma armazenada
-    public void Desenhar()
-    {
-        Console.WriteLine($"0;{Largura};{Altura}");
+        public Linha()
+        {
+            Cor = "0,0,0";
+            Espessura = 1;
+        }
 
-        foreach (var l in Linhas)
+        public Linha(int x1, int y1, int x2, int y2, string cor = "0,0,0", int espessura = 1)
         {
-            l.Desenhar();
+            X1 = x1;
+            Y1 = y1;
+            X2 = x2;
+            Y2 = y2;
+            Cor = cor;
+            Espessura = espessura;
         }
-        foreach (var r in Retangulos)
+
+        public string ParaTexto()
         {
-            r.Desenhar();
-        }
-        foreach (var c in Circulos)
-        {
-            c.Desenhar();
-        }
-        foreach (var e in Elipses)
-        {
-            e.Desenhar();
-        }
-        foreach (var p in Poligonos)
-        {
-            p.Desenhar();
-        }
-        foreach (var t in Textos)
-        {
-            t.Desenhar();
+            return $"1;{X1};{Y1};{X2};{Y2};{Cor};{Espessura}";
         }
     }
 }

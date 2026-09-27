@@ -1,40 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-public class Poligono
+namespace TrabalhoN1_POO
 {
-    public List<int> Pontos = new List<int>(); // guarda pares x, y ex: x1, y1, x2, y2...
-    public string Cor;
-
-    public Poligono() { }
-
-    public Poligono(List<int> pontos, string cor)
+    public class Poligono
     {
-        Pontos = pontos;
-        Cor = cor;
-    }
+        public List<int> Pontos = new List<int>();
+        public string Cor;
 
-    public void Desenhar()
-    {
-        Console.WriteLine(SalvarEmString());
-    }
-
-    public string SalvarEmString()
-    {
-        string pontosStr = string.Join(";", Pontos);
-        return $"5;{pontosStr};{Cor}";
-    }
-
-    public void CarregarDeString(string dados)
-    {
-        var partes = dados.Split(';');
-        Pontos.Clear();
-
-        // A última parte é a Cor, do meio são os pontos
-        for (int i = 1; i < partes.Length - 1; i++)
+        public Poligono()
         {
-            Pontos.Add(Convert.ToInt32(partes[i]));
+            Cor = "0,0,0";
         }
-        Cor = partes[partes.Length - 1];
+
+        public Poligono(List<int> pontos, string cor = "0,0,0")
+        {
+            Pontos = pontos ?? new List<int>();
+            Cor = cor;
+        }
+
+        public string ParaTexto()
+        {
+            string pontosTexto = string.Join(";", Pontos);
+            return $"5;{pontosTexto};{Cor}";
+        }
     }
 }
