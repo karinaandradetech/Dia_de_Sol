@@ -1,4 +1,6 @@
-﻿namespace TrabalhoN1_POO
+﻿using System;
+
+namespace TrabalhoN1_POO
 {
     public class Linha
     {
@@ -22,12 +24,31 @@
             X2 = x2;
             Y2 = y2;
             Cor = cor;
-            Espessura = espessura;
+            Espessura = Math.Max(1, espessura);
         }
 
         public string ParaTexto()
         {
             return $"1;{X1};{Y1};{X2};{Y2};{Cor};{Espessura}";
+        }
+
+        public void Carregar(string dados)
+        {
+            var p = dados.Split(';');
+            if (p.Length >= 7 && p[0] == "1")
+            {
+                X1 = int.Parse(p[1]);
+                Y1 = int.Parse(p[2]);
+                X2 = int.Parse(p[3]);
+                Y2 = int.Parse(p[4]);
+                Cor = p[5];
+                Espessura = int.Parse(p[6]);
+            }
+        }
+
+        public void Desenhar()
+        {
+            Console.WriteLine(ParaTexto());
         }
     }
 }
