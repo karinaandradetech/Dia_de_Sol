@@ -1,112 +1,96 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
-namespace TrabalhoN1_POO
+public class ImagemVetorial
 {
-    public class ImagemVetorial
+    public int Largura;
+    public int Altura;
+    public List<Forma> Formas = new List<Forma>();
+
+    public ImagemVetorial() { }
+
+    public ImagemVetorial(int largura, int altura)
     {
-        public int Largura;
-        public int Altura;
+        Largura = largura;
+        Altura = altura;
+    }
 
-        public List<Linha> Linhas = new List<Linha>();
-        public List<Retangulo> Retangulos = new List<Retangulo>();
-        public List<Circulo> Circulos = new List<Circulo>();
-        public List<Elipse> Elipses = new List<Elipse>();
-        public List<Poligono> Poligonos = new List<Poligono>();
-        public List<TextoForma> Textos = new List<TextoForma>();
-
-        public ImagemVetorial() { Largura = 800; Altura = 600; }
-
-        public ImagemVetorial(int largura, int altura)
+    public string SalvarEmString()
+    {
+        string resultado = $"0;{Largura};{Altura}";
+        foreach (Forma forma in Formas)
         {
-            Largura = largura;
-            Altura = altura;
+            resultado = resultado + "\n" + forma.SalvarEmString();
         }
+        return resultado;
+    }
 
-        public string GerarTexto()
+    public void Desenhar()
+    {
+        Console.WriteLine(SalvarEmString());
+    }
+
+    public void CarregarDeString(string dados)
+    {
+        Formas.Clear();
+        string[] linhas = dados.Split(new[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);
+        if (linhas.Length == 0) return;
+
+        string[] cabecalho = linhas[0].Split(';');
+        Largura = int.Parse(cabecalho[1]);
+        Altura = int.Parse(cabecalho[2]);
+
+        for (int i = 1; i < linhas.Length; i++)
         {
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine($"0;{Largura};{Altura}");
+            string linha = linhas[i];
+            string[] partes = linha.Split(';');
+            int tipo = int.Parse(partes[0]);
 
-            foreach (var item in Linhas) sb.AppendLine(item.ParaTexto());
-            foreach (var item in Retangulos) sb.AppendLine(item.ParaTexto());
-            foreach (var item in Circulos) sb.AppendLine(item.ParaTexto());
-            foreach (var item in Elipses) sb.AppendLine(item.ParaTexto());
-            foreach (var item in Poligonos) sb.AppendLine(item.ParaTexto());
-            foreach (var item in Textos) sb.AppendLine(item.ParaTexto());
+            Forma forma = null;
 
-            return sb.ToString().TrimEnd();
-        }
-
-        public void Carregar(string conteudo)
-        {
-            Linhas.Clear();
-            Retangulos.Clear();
-            Circulos.Clear();
-            Elipses.Clear();
-            Poligonos.Clear();
-            Textos.Clear();
-
-            string[] linhasTexto = conteudo.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);
-
-            foreach (var l in linhasTexto)
+            if (tipo == 1)
             {
-                string linhaLimpa = l.Trim();
-                if (string.IsNullOrEmpty(linhaLimpa)) continue;
-
-                if (linhaLimpa.StartsWith("0;"))
-                {
-                    var p = linhaLimpa.Split(';');
-                    Largura = int.Parse(p[1]);
-                    Altura = int.Parse(p[2]);
-                }
-                else if (linhaLimpa.StartsWith("1;"))
-                {
-                    var obj = new Linha(); obj.Carregar(linhaLimpa); Linhas.Add(obj);
-                }
-                else if (linhaLimpa.StartsWith("2;"))
-                {
-                    var obj = new Retangulo(); obj.Carregar(linhaLimpa); Retangulos.Add(obj);
-                }
-                else if (linhaLimpa.StartsWith("3;"))
-                {
-                    var obj = new Circulo(); obj.Carregar(linhaLimpa); Circulos.Add(obj);
-                }
-                else if (linhaLimpa.StartsWith("4;"))
-                {
-                    var obj = new Elipse(); obj.Carregar(linhaLimpa); Elipses.Add(obj);
-                }
-                else if (linhaLimpa.StartsWith("5;"))
-                {
-                    var obj = new Poligono(); obj.Carregar(linhaLimpa); Poligonos.Add(obj);
-                }
-                else if (linhaLimpa.StartsWith("6;"))
-                {
-                    var obj = new TextoForma(); obj.Carregar(linhaLimpa); Textos.Add(obj);
-                }
+                forma = new Linha();
             }
-        }
-
-        public void Desenhar()
-        {
-            Console.WriteLine(GerarTexto());
-        }
-
-        // --- PONTO EXTRA ---
-        public void SalvarEmArquivo(string caminho)
-        {
-            File.WriteAllText(caminho, GerarTexto());
-        }
-
-        public void CarregarDeArquivo(string caminho)
-        {
-            if (File.Exists(caminho))
+            else if (tipo == 2)
             {
-                string conteudo = File.ReadAllText(caminho);
-                Carregar(conteudo);
+                forma = new Retangulo();
             }
+            else if (tipo == 3)
+            {
+                forma = new Circulo();
+            }
+            else if (tipo == 4)
+            {
+                forma = new Elipse();
+            }
+            else if (tipo == 5)
+            {
+                forma = new Poligono();
+            }
+            else if (tipo == 6)
+            {
+                forma = new TextoForma();
+            }
+            else
+            {
+                throw new ArgumentException("Tipo inválido");
+            }
+
+            forma.CarregarDeString(linha);
+            Formas.Add(forma);
         }
+    }
+
+    public void SalvarEmArquivo(string caminho)
+    {
+        File.WriteAllText(caminho, SalvarEmString());
+    }
+
+    public void CarregarDeArquivo(string caminho)
+    {
+        string conteudo = File.ReadAllText(caminho);
+        CarregarDeString(conteudo);
     }
 }

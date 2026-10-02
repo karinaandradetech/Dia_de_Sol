@@ -1,31 +1,23 @@
 ﻿using Xunit;
-using TrabalhoN1_POO;
 
-namespace TrabalhoN1_POO.Tests
+public class ElipseTest
 {
-    public class ElipseTest
+    [Fact]
+    public void SalvarEmString_Elipse()
     {
-        [Fact]
-        public void TestarParaTexto()
-        {
-            var e = new Elipse(100, 100, 40, 20, "255,0,0");
-            Assert.Equal("4;100;100;40;20;255,0,0", e.ParaTexto());
-        }
+        Elipse elipse = new Elipse(150, 120, 80, 35, "255,255,255");
+        Assert.Equal("4;150;120;80;35;255,255,255", elipse.SalvarEmString());
+    }
 
-        [Fact]
-        public void TestarCarregar()
-        {
-            var e = new Elipse();
-            e.Carregar("4;100;100;40;20;255,0,0");
-            Assert.Equal(40, e.RaioX);
-        }
-
-        [Fact]
-        public void TestarDesenhar()
-        {
-            var e = new Elipse(0, 0, 10, 5, "0,0,0");
-            e.Desenhar();
-            Assert.NotNull(e);
-        }
+    [Fact]
+    public void CarregarString_Elipse()
+    {
+        Elipse elipse = new Elipse();
+        elipse.CarregarDeString("4;150;120;80;35;255,255,255");
+        Assert.Equal(150, elipse.X);
+        Assert.Equal(120, elipse.Y);
+        Assert.Equal(80, elipse.RaioX);
+        Assert.Equal(35, elipse.RaioY);
+        Assert.Equal("255,255,255", elipse.Cor);
     }
 }

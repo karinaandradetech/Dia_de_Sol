@@ -1,31 +1,31 @@
 ﻿using Xunit;
-using TrabalhoN1_POO;
 
-namespace TrabalhoN1_POO.Tests
+public class LinhaTest
 {
-    public class LinhaTest
+    [Fact]
+    public void SalvarEmString_Linha()
     {
-        [Fact]
-        public void TestarParaTexto()
-        {
-            var linha = new Linha(0, 0, 10, 10, "255,0,0", 2);
-            Assert.Equal("1;0;0;10;10;255,0,0;2", linha.ParaTexto());
-        }
+        Linha linha = new Linha(10, 90, 250, 90, "255,0,0", 5);
+        Assert.Equal("1;10;90;250;90;255,0,0;5", linha.SalvarEmString());
+    }
 
-        [Fact]
-        public void TestarCarregar()
-        {
-            var linha = new Linha();
-            linha.Carregar("1;0;0;10;10;255,0,0;2");
-            Assert.Equal(10, linha.X2);
-        }
+    [Fact]
+    public void CarregarString_Linha()
+    {
+        Linha linha = new Linha();
+        linha.CarregarDeString("1;10;90;250;90;255,0,0;5");
+        Assert.Equal(10, linha.X1);
+        Assert.Equal(90, linha.Y1);
+        Assert.Equal(250, linha.X2);
+        Assert.Equal(90, linha.Y2);
+        Assert.Equal("255,0,0", linha.Cor);
+        Assert.Equal(5, linha.Largura);
+    }
 
-        [Fact]
-        public void TestarDesenhar()
-        {
-            var linha = new Linha(0, 0, 5, 5, "0,0,0", 1);
-            linha.Desenhar();
-            Assert.NotNull(linha);
-        }
+    [Fact]
+    public void Linha_LarguraMenorQueUm_DeveAjustarParaUm()
+    {
+        Linha linha = new Linha(0, 0, 10, 10, "0,0,0", -5);
+        Assert.Equal(1, linha.Largura);
     }
 }

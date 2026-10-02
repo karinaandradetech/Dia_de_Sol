@@ -1,31 +1,23 @@
 ﻿using Xunit;
-using TrabalhoN1_POO;
 
-namespace TrabalhoN1_POO.Tests
+public class RetanguloTest
 {
-    public class RetanguloTest
+    [Fact]
+    public void SalvarEmString_Retangulo()
     {
-        [Fact]
-        public void TestarParaTexto()
-        {
-            var ret = new Retangulo(10, 10, 50, 50, "0,255,0");
-            Assert.Equal("2;10;10;50;50;0,255,0", ret.ParaTexto());
-        }
+        Retangulo retangulo = new Retangulo(80, 40, 120, 60, "0,255,0");
+        Assert.Equal("2;80;40;120;60;0,255,0", retangulo.SalvarEmString());
+    }
 
-        [Fact]
-        public void TestarCarregar()
-        {
-            var ret = new Retangulo();
-            ret.Carregar("2;10;10;50;50;0,255,0");
-            Assert.Equal(50, ret.Largura);
-        }
-
-        [Fact]
-        public void TestarDesenhar()
-        {
-            var ret = new Retangulo(0, 0, 10, 10, "0,0,0");
-            ret.Desenhar();
-            Assert.NotNull(ret);
-        }
+    [Fact]
+    public void CarregarString_Retangulo()
+    {
+        Retangulo retangulo = new Retangulo();
+        retangulo.CarregarDeString("2;80;40;120;60;0,255,0");
+        Assert.Equal(80, retangulo.X);
+        Assert.Equal(40, retangulo.Y);
+        Assert.Equal(120, retangulo.Largura);
+        Assert.Equal(60, retangulo.Altura);
+        Assert.Equal("0,255,0", retangulo.Cor);
     }
 }

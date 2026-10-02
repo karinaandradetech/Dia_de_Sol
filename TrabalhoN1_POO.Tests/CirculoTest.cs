@@ -1,31 +1,22 @@
 ﻿using Xunit;
-using TrabalhoN1_POO;
 
-namespace TrabalhoN1_POO.Tests
+public class CirculoTest
 {
-    public class CirculoTest
+    [Fact]
+    public void SalvarEmString_Circulo()
     {
-        [Fact]
-        public void TestarParaTexto()
-        {
-            var c = new Circulo(50, 50, 20, "255,255,0");
-            Assert.Equal("3;50;50;20;255,255,0", c.ParaTexto());
-        }
+        Circulo circulo = new Circulo(200, 150, 45, "255,128,0");
+        Assert.Equal("3;200;150;45;255,128,0", circulo.SalvarEmString());
+    }
 
-        [Fact]
-        public void TestarCarregar()
-        {
-            var c = new Circulo();
-            c.Carregar("3;50;50;20;255,255,0");
-            Assert.Equal(20, c.Raio);
-        }
-
-        [Fact]
-        public void TestarDesenhar()
-        {
-            var c = new Circulo(0, 0, 10, "0,0,0");
-            c.Desenhar();
-            Assert.NotNull(c);
-        }
+    [Fact]
+    public void CarregarString_Circulo()
+    {
+        Circulo circulo = new Circulo();
+        circulo.CarregarDeString("3;200;150;45;255,128,0");
+        Assert.Equal(200, circulo.X);
+        Assert.Equal(150, circulo.Y);
+        Assert.Equal(45, circulo.Raio);
+        Assert.Equal("255,128,0", circulo.Cor);
     }
 }

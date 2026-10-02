@@ -1,32 +1,21 @@
-﻿using System.Collections.Generic;
-using Xunit;
-using TrabalhoN1_POO;
+﻿using Xunit;
+using System.Collections.Generic;
 
-namespace TrabalhoN1_POO.Tests
+public class PoligonoTest
 {
-    public class PoligonoTest
+    [Fact]
+    public void SalvarEmString_Poligono()
     {
-        [Fact]
-        public void TestarParaTexto()
-        {
-            var p = new Poligono(new List<int> { 0, 0, 10, 0, 5, 10 }, "128,128,128");
-            Assert.Equal("5;0;0;10;0;5;10;128,128,128", p.ParaTexto());
-        }
+        Poligono poligono = new Poligono(new List<int> { 10, 10, 110, 10, 60, 90 }, "0,0,255");
+        Assert.Equal("5;10;10;110;10;60;90;0,0,255", poligono.SalvarEmString());
+    }
 
-        [Fact]
-        public void TestarCarregar()
-        {
-            var p = new Poligono();
-            p.Carregar("5;0;0;10;0;5;10;128,128,128");
-            Assert.Equal(6, p.Pontos.Count);
-        }
-
-        [Fact]
-        public void TestarDesenhar()
-        {
-            var p = new Poligono(new List<int> { 0, 0, 1, 1, 2, 2 }, "0,0,0");
-            p.Desenhar();
-            Assert.NotNull(p);
-        }
+    [Fact]
+    public void CarregarString_Poligono()
+    {
+        Poligono poligono = new Poligono();
+        poligono.CarregarDeString("5;10;10;110;10;60;90;0,0,255");
+        Assert.Equal(new List<int> { 10, 10, 110, 10, 60, 90 }, poligono.Pontos);
+        Assert.Equal("0,0,255", poligono.Cor);
     }
 }

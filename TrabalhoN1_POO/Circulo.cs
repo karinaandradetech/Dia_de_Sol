@@ -1,44 +1,38 @@
 ﻿using System;
 
-namespace TrabalhoN1_POO
+public class Circulo : Forma
 {
-    public class Circulo
+    public int X;
+    public int Y;
+    public int Raio;
+    public string Cor;
+
+    public Circulo() { }
+
+    public Circulo(int x, int y, int raio, string cor)
     {
-        public int X;
-        public int Y;
-        public int Raio;
-        public string Cor;
+        X = x;
+        Y = y;
+        Raio = raio;
+        Cor = cor;
+    }
 
-        public Circulo() { Cor = "0,0,0"; }
+    public override string SalvarEmString()
+    {
+        return $"3;{X};{Y};{Raio};{Cor}";
+    }
 
-        public Circulo(int x, int y, int raio, string cor = "0,0,0")
-        {
-            X = x;
-            Y = y;
-            Raio = raio;
-            Cor = cor;
-        }
+    public override void Desenhar()
+    {
+        Console.WriteLine(SalvarEmString());
+    }
 
-        public string ParaTexto()
-        {
-            return $"3;{X};{Y};{Raio};{Cor}";
-        }
-
-        public void Carregar(string dados)
-        {
-            var p = dados.Split(';');
-            if (p.Length >= 5 && p[0] == "3")
-            {
-                X = int.Parse(p[1]);
-                Y = int.Parse(p[2]);
-                Raio = int.Parse(p[3]);
-                Cor = p[4];
-            }
-        }
-
-        public void Desenhar()
-        {
-            Console.WriteLine(ParaTexto());
-        }
+    public override void CarregarDeString(string dados)
+    {
+        string[] partes = dados.Split(';');
+        X = int.Parse(partes[1]);
+        Y = int.Parse(partes[2]);
+        Raio = int.Parse(partes[3]);
+        Cor = partes[4];
     }
 }

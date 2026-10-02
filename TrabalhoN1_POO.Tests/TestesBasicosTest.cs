@@ -1,77 +1,26 @@
 ﻿using Xunit;
-using TrabalhoN1_POO;
 using System.Collections.Generic;
-
-namespace TrabalhoN1_POO.Tests
+public class TestesBasicosTest
 {
-    public class TestesBasicosTest
+    [Fact]
+    public void ImagemVetorial_SalvarECarregar_ImagemCompleta()
     {
-        [Fact]
-        public void Salvar_Linha()
-        {
-            var l = new Linha(10, 90, 250, 90, "255,0,0", 5);
-            Assert.Equal("1;10;90;250;90;255,0,0;5", l.ParaTexto());
-        }
+        ImagemVetorial imgOriginal = new ImagemVetorial(600, 400);
+        imgOriginal.Formas.Add(new Circulo(520, 80, 40, "255,255,0"));
+        imgOriginal.Formas.Add(new Elipse(120, 70, 55, 25, "255,255,255"));
+        imgOriginal.Formas.Add(new Poligono(new List<int> { 0, 300, 150, 140, 300, 300 }, "128,128,128"));
+        imgOriginal.Formas.Add(new Linha(0, 300, 600, 300, "34,139,34", 4));
+        imgOriginal.Formas.Add(new Retangulo(430, 230, 30, 70, "139,69,19"));
+        imgOriginal.Formas.Add(new Circulo(445, 200, 55, "0,128,0"));
+        imgOriginal.Formas.Add(new TextoForma(200, 350, "Parque da Cidade", "0,0,0"));
+  
+        string dadosSalvos = imgOriginal.SalvarEmString();
 
-        [Fact]
-        public void Salvar_Retangulo()
-        {
-            var r = new Retangulo(80, 40, 120, 60, "0,255,0");
-            Assert.Equal("2;80;40;120;60;0,255,0", r.ParaTexto());
-        }
+        ImagemVetorial imgCarregada = new ImagemVetorial();
+        imgCarregada.CarregarDeString(dadosSalvos);
 
-        [Fact]
-        public void Salvar_Circulo()
-        {
-            var c = new Circulo(200, 150, 45, "255,128,0");
-            Assert.Equal("3;200;150;45;255,128,0", c.ParaTexto());
-        }
-
-        [Fact]
-        public void Salvar_Elipse()
-        {
-            var e = new Elipse(150, 120, 80, 35, "255,255,255");
-            Assert.Equal("4;150;120;80;35;255,255,255", e.ParaTexto());
-        }
-
-        [Fact]
-        public void Salvar_Poligono()
-        {
-            var p = new Poligono(new List<int> { 10, 10, 110, 10, 60, 90 }, "0,0,255");
-            Assert.Equal("5;10;10;110;10;60;90;0,0,255", p.ParaTexto());
-        }
-
-        [Fact]
-        public void Salvar_Texto()
-        {
-            var t = new TextoForma(30, 200, "Bom Dia", "0,0,0");
-            Assert.Equal("6;30;200;Bom Dia;0,0,0", t.ParaTexto());
-        }
-
-        [Fact]
-        public void Carregar_Linha()
-        {
-            var l = new Linha();
-            l.Carregar("1;10;90;250;90;255,0,0;5");
-            Assert.Equal(10, l.X1);
-            Assert.Equal(90, l.Y1);
-            Assert.Equal(250, l.X2);
-            Assert.Equal(90, l.Y2);
-            Assert.Equal("255,0,0", l.Cor);
-            Assert.Equal(5, l.Espessura);
-        }
-
-        [Fact]
-        public void Carregar_ImagemVetorial()
-        {
-            string texto = "0;600;400\n3;520;80;40;255,255,0\n6;200;350;Parque da Cidade;0,0,0";
-            var img = new ImagemVetorial();
-            img.Carregar(texto);
-
-            Assert.Equal(600, img.Largura);
-            Assert.Equal(400, img.Altura);
-            Assert.Single(img.Circulos);
-            Assert.Single(img.Textos);
-        }
+        Assert.Equal(600, imgCarregada.Largura);
+        Assert.Equal(400, imgCarregada.Altura);
+        Assert.Equal(7, imgCarregada.Formas.Count);
     }
 }
