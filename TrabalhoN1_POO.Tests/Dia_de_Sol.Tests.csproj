@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TrabalhoN1_POO\TrabalhoN1_POO.csproj" />
+    <ProjectReference Include="..\TrabalhoN1_POO\Dia_de_Sol.csproj" />
   </ItemGroup>
 
   <ItemGroup>

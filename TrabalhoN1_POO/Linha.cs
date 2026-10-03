@@ -47,5 +47,9 @@ public class Linha : Forma
         Y2 = int.Parse(partes[4]);
         Cor = partes[5];
         Largura = int.Parse(partes[6]);
+        if (Largura < 1)
+        {
+            Largura = 1;
+        }
     }
 }

@@ -13,7 +13,7 @@ public class TestesBasicosTest
         imgOriginal.Formas.Add(new Retangulo(430, 230, 30, 70, "139,69,19"));
         imgOriginal.Formas.Add(new Circulo(445, 200, 55, "0,128,0"));
         imgOriginal.Formas.Add(new TextoForma(200, 350, "Parque da Cidade", "0,0,0"));
-  
+
         string dadosSalvos = imgOriginal.SalvarEmString();
 
         ImagemVetorial imgCarregada = new ImagemVetorial();

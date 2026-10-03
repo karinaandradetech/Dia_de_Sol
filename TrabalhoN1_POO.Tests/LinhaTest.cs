@@ -28,4 +28,14 @@ public class LinhaTest
         Linha linha = new Linha(0, 0, 10, 10, "0,0,0", -5);
         Assert.Equal(1, linha.Largura);
     }
+
+    [Fact]
+    public void CarregarString_LarguraMenorQueUm_DeveAjustarParaUm()
+    {
+        Linha linha = new Linha();
+
+        linha.CarregarDeString("1;0;0;10;10;0,0,0;0");
+
+        Assert.Equal(1, linha.Largura);
+    }
 }
